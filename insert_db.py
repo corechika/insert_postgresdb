@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import settings
 import os
+import shutil
 
 PATH = settings.PATH
 PORT = settings.PORT
@@ -41,3 +42,7 @@ if __name__ == '__main__':
 
     cur.close()
     connection.close()
+    
+    # delete csv files
+    shutil.rmtree(CSVPATH)
+    os.mkdir(CSVPATH)
