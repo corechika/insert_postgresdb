@@ -13,8 +13,8 @@ PSW = settings.PASSWORD
 CSVPATH = '../csvfile'
 
 def insert_db(text, cur):
-    sql = "insert into tweets(tweet) values('');".format(text)
-    cur.execute(sql)
+    sql = "insert into tweets(tweet) values(%s);"
+    cur.execute(sql, (text,))
     connection.commit()
 
 if __name__ == '__main__':
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     for f in files:
         csv_df = pd.read_csv(CSVPATH+'/'+f, engine='python')
         print(f)
-        csv_df.apply(lambda row: insert_db(row, cur))
+        csv_df.iloc[:, 0].apply(lambda row: insert_db(row, cur))
 
     # test
     cur.execute('select * from tweets limit 5;')
